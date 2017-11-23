@@ -1,10 +1,14 @@
 language: csharp
-solution: SaveTheWorld.sln
-
+mono: none
+dotnet: 1.0.3
+dist: trusty
+script:
+ - dotnet restore
+ 
 install:
   - nuget restore SaveTheWorld.sln
   - nuget install NUnit.Console -Version 3.7.0 -OutputDirectory testrunner
   
 script:
   - msbuild SaveTheWorld.sln
-  - ./testrunner/NUnit.Console.3.7.0/tools/nunit3-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
+  - ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console ./SaveTheWorld.Tests/bin/Debug/netcoreapp1.1/SaveTheWorld.Tests.dll
