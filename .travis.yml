@@ -6,5 +6,5 @@ install:
   - nuget restore SaveTheWorld.sln -OutputDirectory testrunner
   
 script:
-  - xbuild ./src/yoursolution.sln
+  - xbuild SaveTheWorld.sln
   - ./testrunner/nunit-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
