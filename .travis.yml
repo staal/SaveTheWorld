@@ -2,9 +2,9 @@ language: csharp
 solution: SaveTheWorld.sln
 
 install:
-  - sudo apt-get install nunit-console
-  - nuget restore SaveTheWorld.sln -OutputDirectory testrunner
+  - nuget restore SaveTheWorld.sln
+  - nuget install NUnit.Console -Version 3.7.0 -OutputDirectory testrunner
   
 script:
   - xbuild SaveTheWorld.sln
-  - ./testrunner/nunit-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
+  - ./testrunner/NUnit.Console/tools/nunit3-console.exe ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
