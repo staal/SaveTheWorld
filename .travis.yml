@@ -6,5 +6,5 @@ install:
   - nuget install NUnit.Console -Version 3.7.0 -OutputDirectory testrunner
   
 script:
-  - xbuild SaveTheWorld.sln
-  - ./testrunner/NUnit.Console/tools/nunit3-console.exe ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
+  - msbuild SaveTheWorld.sln
+  - ./testrunner/NUnit.Console/tools/nunit3-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
