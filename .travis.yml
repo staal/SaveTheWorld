@@ -7,4 +7,4 @@ install:
   
 script:
   - msbuild SaveTheWorld.sln
-  - ./testrunner/NUnit.Console/tools/nunit3-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
+  - ./testrunner/NUnit.Console.3.7.0/tools/nunit3-console ./SaveTheWorld.Tests/bin/Release/SaveTheWorld.Tests.dll
