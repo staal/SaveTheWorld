@@ -1,0 +1,35 @@
+﻿<?xml version="1.0"?>
+<board>
+  <incidents>8</incidents>
+  <cubes>24</cubes>
+  <researchstations>6</researchstations>
+  <start>atlanta</start>
+  <cities>
+    <disease color="blue">
+      <city id="sanfrancisco">San Francisco</city>
+      <city id="atlanta">Atlanta</city>
+    </disease>
+    <disease color="yellow">
+      <city id="losangeles">Los Angeles</city>
+      <city id="miami">Miami</city>
+    </disease>
+  </cities>
+  <connections>
+    <city id="sanfrancisco">
+      <connection id="atlanta"/>
+      <connection id="losangeles"/>
+      <connection id="miami"/>
+    </city>
+    <city id="atlanta">
+      <connection id="sanfrancisco"/>
+    </city>
+    <city id="miami">
+      <connection id="sanfrancisco"/>
+      <connection id="losangeles"/>
+    </city>
+    <city id="losangeles">
+      <connection id="sanfrancisco"/>
+      <connection id="miami"/>
+    </city>
+  </connections>
+</board>
