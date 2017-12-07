@@ -103,7 +103,6 @@ namespace SaveTheWorld.Tests
 
             City city = board.Cities["atlanta"];
             Assert.IsTrue(board.Diseases.Contains(city.Disease));
-
         }
     }
 }

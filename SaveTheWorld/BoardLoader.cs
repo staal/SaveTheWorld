@@ -22,23 +22,20 @@ namespace SaveTheWorld
             {
                 while (reader.Read())
                 {
-                    switch (reader.NodeType)
+                    if (reader.NodeType == XmlNodeType.Element)
                     {
-
-                        case XmlNodeType.Element:
-                            if (reader.Name == "cities")
-                            {
-                                LoadDiseases(reader.ReadSubtree(), board);
-                            }
-                            else if (reader.Name == "connections")
-                            {
-                                LoadConnections(reader.ReadSubtree(), board);
-                            }
-                            else if (reader.Name == "start")
-                            {
-                                board.Start = ReadText(reader);
-                            }
-                            break;
+                        if (reader.Name == "cities")
+                        {
+                            LoadDiseases(reader.ReadSubtree(), board);
+                        }
+                        else if (reader.Name == "connections")
+                        {
+                            LoadConnections(reader.ReadSubtree(), board);
+                        }
+                        else if (reader.Name == "start")
+                        {
+                            board.Start = ReadText(reader);
+                        }
                     }
                 }
             }
@@ -71,23 +68,17 @@ namespace SaveTheWorld
         {
             while (reader.Read())
             {
-                switch (reader.NodeType)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "city")
                 {
-
-                    case XmlNodeType.Element:
-                        if (reader.Name == "city")
-                        {
-                            string cityID = reader.GetAttribute("id");
-                            if (cityID != null && board.Cities[cityID] != null)
-                            {
-                                LoadCityConnections(reader.ReadSubtree(), board.Cities[cityID], board);
-                            }
-                            else
-                            {
-                                throw new XmlException("Malformed city-connection tag found");
-                            }
-                        }
-                        break;
+                    string cityID = reader.GetAttribute("id");
+                    if (cityID != null && board.Cities[cityID] != null)
+                    {
+                        LoadCityConnections(reader.ReadSubtree(), board.Cities[cityID], board);
+                    }
+                    else
+                    {
+                        throw new XmlException("Malformed city-connection tag found");
+                    }
                 }
             }
         }
@@ -96,23 +87,17 @@ namespace SaveTheWorld
         {
             while (reader.Read())
             {
-                switch (reader.NodeType)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "connection")
                 {
-
-                    case XmlNodeType.Element:
-                        if (reader.Name == "connection")
-                        {
-                            string connectingCityID = reader.GetAttribute("id");
-                            if (connectingCityID != null && board.Cities[connectingCityID] != null)
-                            {
-                                city.Connections[connectingCityID] = board.Cities[connectingCityID];
-                            }
-                            else
-                            {
-                                throw new XmlException("Malformed connection tag found");
-                            }
-                        }
-                        break;
+                    string connectingCityID = reader.GetAttribute("id");
+                    if (connectingCityID != null && board.Cities[connectingCityID] != null)
+                    {
+                        city.Connections[connectingCityID] = board.Cities[connectingCityID];
+                    }
+                    else
+                    {
+                        throw new XmlException("Malformed connection tag found");
+                    }
                 }
             }
         }
@@ -121,20 +106,14 @@ namespace SaveTheWorld
         {
             while (reader.Read())
             {
-                switch (reader.NodeType)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "disease")
                 {
-
-                    case XmlNodeType.Element:
-                        if (reader.Name == "disease")
-                        {
-                            string diseaseColor = reader.GetAttribute("color");
-                            if (diseaseColor != null)
-                            {
-                                board.Diseases.Add(diseaseColor);
-                                LoadCities(reader.ReadSubtree(), diseaseColor, board);
-                            }
-                        }
-                        break;
+                    string diseaseColor = reader.GetAttribute("color");
+                    if (diseaseColor != null)
+                    {
+                        board.Diseases.Add(diseaseColor);
+                        LoadCities(reader.ReadSubtree(), diseaseColor, board);
+                    }
                 }
             }
         }
@@ -143,34 +122,31 @@ namespace SaveTheWorld
         {
             while (reader.Read())
             {
-                switch (reader.NodeType)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "city")
                 {
-                    case XmlNodeType.Element:
-                        if (reader.Name == "city")
-                        {
-                            string cityName = null;
-                            string cityID = reader.GetAttribute("id");
+                    string cityName = null;
+                    string cityID = reader.GetAttribute("id");
 
-                            // Read inner text node if present!
-                            reader.Read();
-                            if (reader.NodeType == XmlNodeType.Text)
-                            {
-                                cityName = reader.Value;
-                            }
+                    // Read inner text node if present!
+                    reader.Read();
+                    if (reader.NodeType == XmlNodeType.Text)
+                    {
+                        cityName = reader.Value;
+                    }
 
-                            if (cityID != null && cityName != null)
-                            {
-                                City city = new City(disease, cityID, cityName);
-                                board.Cities.Add(cityID, city);
-                            }
-                            else
-                            {
-                                throw new XmlException("Malformed city xml");
-                            }
-                        }
-                        break;
+                    if (cityID != null && cityName != null)
+                    {
+                        City city = new City(disease, cityID, cityName);
+                        board.Cities.Add(cityID, city);
+                    }
+                    else
+                    {
+                        throw new XmlException("Malformed city xml");
+                    }
                 }
             }
         }
+
+
     }
 }
