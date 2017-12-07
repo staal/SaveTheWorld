@@ -50,7 +50,7 @@ namespace SaveTheWorld.Tests
         {
             var assembly = Assembly.GetExecutingAssembly();
             var codebaseLocation = Path.GetDirectoryName(assembly.Location);
-            return codebaseLocation + @"\";
+            return codebaseLocation + "/";
         }
     }
 }
