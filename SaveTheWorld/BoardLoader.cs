@@ -54,8 +54,16 @@ namespace SaveTheWorld
                     }
                 }
             }
-
+            ValidateBoard(board);
             return board;
+        }
+
+        private void ValidateBoard(Board board)
+        {
+            if(board.Cities[board.Start] == null )
+            {
+                throw new XmlException("Starting city name does not match a city.");
+            }
         }
 
         private string ReadText(XmlReader reader)
@@ -120,7 +128,7 @@ namespace SaveTheWorld
                             if (cityID != null && cityName != null)
                             {
                                 City city = new City(disease, cityID, cityName);
-                                board.Cities.Add(city);
+                                board.Cities.Add(cityID, city);
                             }
                             else
                             {

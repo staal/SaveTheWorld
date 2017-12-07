@@ -55,6 +55,23 @@ namespace SaveTheWorld.Tests
         }
 
         [Test]
+        public void BoardContainsCities()
+        {
+            BoardLoader boardLoader = new BoardLoader();
+            string path = AssemblyPath() + "testBoard.xml";
+
+            Board board = boardLoader.Load(path);
+
+            Assert.NotNull(board.Cities["atlanta"]);
+            Assert.NotNull(board.Cities["miami"]);
+            Assert.NotNull(board.Cities["losangeles"]);
+
+            City city = board.Cities["sanfrancisco"];
+            Assert.NotNull(board.Cities["sanfrancisco"]);
+            Assert.AreEqual(city.Name, "San Francisco");
+        }
+
+        [Test]
         public void FileOpenSucceeds()
         {
             string path = AssemblyPath() + "testBoard.xml";

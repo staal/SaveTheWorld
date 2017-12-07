@@ -10,11 +10,11 @@ namespace SaveTheWorld
     {
         public Board()
         {
-            Cities = new List<City>();
+            Cities = new Dictionary<string,City>();
             Diseases = new List<string>();
         }
 
-        public List<City> Cities { get; set; }
+        public Dictionary<string,City> Cities { get; set; }
         public List<string> Diseases { get; set; }
         public int Cubes { get; set; }
         public int Incidents { get; internal set; }
