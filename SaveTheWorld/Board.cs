@@ -14,11 +14,8 @@ namespace SaveTheWorld
             Diseases = new List<string>();
         }
 
-        public Dictionary<string,City> Cities { get; set; }
-        public List<string> Diseases { get; set; }
-        public int Cubes { get; set; }
-        public int Incidents { get; internal set; }
+        public Dictionary<string,City> Cities { get; internal set; }
+        public List<string> Diseases { get; internal set; }
         public string Start { get; internal set; }
-        public int ResarchStations { get; internal set; }
     }
 }

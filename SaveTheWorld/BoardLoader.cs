@@ -34,18 +34,6 @@ namespace SaveTheWorld
                             {
                                 LoadConnections(reader.ReadSubtree(), board);
                             }
-                            else if (reader.Name == "incidents")
-                            {
-                                board.Incidents = int.Parse(ReadText(reader));
-                            }
-                            else if (reader.Name == "cubes")
-                            {
-                                board.Cubes = int.Parse(ReadText(reader));
-                            }
-                            else if (reader.Name == "researchstations")
-                            {
-                                board.ResarchStations = int.Parse(ReadText(reader));
-                            }
                             else if (reader.Name == "start")
                             {
                                 board.Start = ReadText(reader);

@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0"?>
 <board>
-  <incidents>8</incidents>
-  <cubes>24</cubes>
-  <researchstations>6</researchstations>
   <start>atlanta</start>
   <cities>
     <disease color="blue">

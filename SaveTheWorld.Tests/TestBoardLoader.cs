@@ -48,9 +48,6 @@ namespace SaveTheWorld.Tests
 
             Assert.AreEqual(board.Cities.Count, 4);
             Assert.AreEqual(board.Diseases.Count, 2);
-            Assert.AreEqual(board.Cubes, 24);
-            Assert.AreEqual(board.ResarchStations, 6);
-            Assert.AreEqual(board.Incidents, 8);
             Assert.AreEqual(board.Start, "atlanta");
         }
 
