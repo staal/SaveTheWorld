@@ -13,38 +13,45 @@ namespace SaveTheWorld.Tests
     [TestFixture]
     class TestBoardLoader
     {
+        private BoardLoader boardLoader;
+        private string testBoardPath;
+
+        [SetUp]
+        public void Setup()
+        {
+            boardLoader = new BoardLoader();
+            testBoardPath = AssemblyPath() + "testBoard.xml";
+        }
+
+        private string AssemblyPath()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var codebaseLocation = Path.GetDirectoryName(assembly.Location);
+            return codebaseLocation + "/";
+        }
+
         [Test]
         public void BoardLoadMustBeNonNull()
         {
-            BoardLoader board = new BoardLoader();
-
-            Assert.Throws<ArgumentNullException>(() => board.Load(null));
+            Assert.Throws<ArgumentNullException>(() => boardLoader.Load(null));
         }
 
         [Test]
         public void BoardLoadMustExist()
         {
-            BoardLoader board = new BoardLoader();
-
-            Assert.Throws<System.IO.FileNotFoundException>(() => board.Load("somewierdfile"));
+            Assert.Throws<System.IO.FileNotFoundException>(() => boardLoader.Load("somewierdfile"));
         }
 
         [Test]
         public void BoardLoadReturnsBoard()
         {
-            BoardLoader boardLoader = new BoardLoader();
-            string path = AssemblyPath() + "testBoard.xml";
-
-            Assert.IsNotNull(boardLoader.Load(path));
+            Assert.IsNotNull(boardLoader.Load(testBoardPath));
         }
 
         [Test]
         public void BoardLoadsCorrectly()
         {
-            BoardLoader boardLoader = new BoardLoader();
-            string path = AssemblyPath() + "testBoard.xml";
-
-            Board board = boardLoader.Load(path);
+            Board board = boardLoader.Load(testBoardPath);
 
             Assert.AreEqual(board.Cities.Count, 4);
             Assert.AreEqual(board.Diseases.Count, 2);
@@ -54,33 +61,49 @@ namespace SaveTheWorld.Tests
         [Test]
         public void BoardContainsCities()
         {
-            BoardLoader boardLoader = new BoardLoader();
-            string path = AssemblyPath() + "testBoard.xml";
-
-            Board board = boardLoader.Load(path);
+            Board board = boardLoader.Load(testBoardPath);
 
             Assert.NotNull(board.Cities["atlanta"]);
             Assert.NotNull(board.Cities["miami"]);
             Assert.NotNull(board.Cities["losangeles"]);
+            Assert.NotNull(board.Cities["sanfrancisco"]);
+        }
+
+        [Test]
+        public void CitiesHaveProperNames()
+        {
+            Board board = boardLoader.Load(testBoardPath);
 
             City city = board.Cities["sanfrancisco"];
-            Assert.NotNull(board.Cities["sanfrancisco"]);
             Assert.AreEqual(city.Name, "San Francisco");
         }
 
         [Test]
-        public void FileOpenSucceeds()
+        public void CityIsConnected()
         {
-            string path = AssemblyPath() + "testBoard.xml";
+            Board board = boardLoader.Load(testBoardPath);
 
-            Assert.DoesNotThrow(() => System.IO.File.Open(path, System.IO.FileMode.Open));
+            City city = board.Cities["atlanta"];
+            Assert.AreEqual(city.Connections.Count, 1);
         }
 
-        private string AssemblyPath()
+        [Test]
+        public void AtlantaIsConnectedToSanfran()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var codebaseLocation = Path.GetDirectoryName(assembly.Location);
-            return codebaseLocation + "/";
+            Board board = boardLoader.Load(testBoardPath);
+
+            City city = board.Cities["atlanta"];
+            Assert.IsTrue(city.Connections.ContainsKey("sanfrancisco"));
+        }
+
+        [Test]
+        public void CityDiseaseIsOnBoard()
+        {
+            Board board = boardLoader.Load(testBoardPath);
+
+            City city = board.Cities["atlanta"];
+            Assert.IsTrue(board.Diseases.Contains(city.Disease));
+
         }
     }
 }

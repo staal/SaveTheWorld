@@ -48,7 +48,7 @@ namespace SaveTheWorld
 
         private void ValidateBoard(Board board)
         {
-            if(board.Cities[board.Start] == null )
+            if (board.Cities[board.Start] == null)
             {
                 throw new XmlException("Starting city name does not match a city.");
             }
@@ -69,7 +69,52 @@ namespace SaveTheWorld
 
         private void LoadConnections(XmlReader reader, Board board)
         {
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
 
+                    case XmlNodeType.Element:
+                        if (reader.Name == "city")
+                        {
+                            string cityID = reader.GetAttribute("id");
+                            if (cityID != null && board.Cities[cityID] != null)
+                            {
+                                LoadCityConnections(reader.ReadSubtree(), board.Cities[cityID], board);
+                            }
+                            else
+                            {
+                                throw new XmlException("Malformed city-connection tag found");
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void LoadCityConnections(XmlReader reader, City city, Board board)
+        {
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+
+                    case XmlNodeType.Element:
+                        if (reader.Name == "connection")
+                        {
+                            string connectingCityID = reader.GetAttribute("id");
+                            if (connectingCityID != null && board.Cities[connectingCityID] != null)
+                            {
+                                city.Connections[connectingCityID] = board.Cities[connectingCityID];
+                            }
+                            else
+                            {
+                                throw new XmlException("Malformed connection tag found");
+                            }
+                        }
+                        break;
+                }
+            }
         }
 
         private void LoadDiseases(XmlReader reader, Board board)
