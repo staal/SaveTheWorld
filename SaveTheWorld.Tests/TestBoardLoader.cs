@@ -32,10 +32,26 @@ namespace SaveTheWorld.Tests
         [Test]
         public void BoardLoadReturnsBoard()
         {
-            BoardLoader board = new BoardLoader();
+            BoardLoader boardLoader = new BoardLoader();
             string path = AssemblyPath() + "testBoard.xml";
 
-            Assert.IsNotNull(board.Load(path));
+            Assert.IsNotNull(boardLoader.Load(path));
+        }
+
+        [Test]
+        public void BoardLoadsCorrectly()
+        {
+            BoardLoader boardLoader = new BoardLoader();
+            string path = AssemblyPath() + "testBoard.xml";
+
+            Board board = boardLoader.Load(path);
+
+            Assert.AreEqual(board.Cities.Count, 4);
+            Assert.AreEqual(board.Diseases.Count, 2);
+            Assert.AreEqual(board.Cubes, 24);
+            Assert.AreEqual(board.ResarchStations, 6);
+            Assert.AreEqual(board.Incidents, 8);
+            Assert.AreEqual(board.Start, "atlanta");
         }
 
         [Test]
